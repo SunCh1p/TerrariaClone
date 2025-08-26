@@ -1,0 +1,13 @@
+to Compile and run, ensure cmake is installed, 
+also the following dependencies are needed:
+SDL3, SDL3_ttf
+
+
+navigate to the source directory.
+
+Type the following commands:
+  cmake -B build .
+  cmake --build build
+
+To Run after it is build type:
+  ./build/hello
