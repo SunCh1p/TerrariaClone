@@ -1,0 +1,49 @@
+@startuml inputSystem
+
+class Command{
+  +execute(Gameactor: actor): void
+}
+
+class Jump{
+  +execute(Gameactor:actor): void
+}
+
+class MoveLeft{
+  +execute(Gameactor: actor): void
+} 
+
+class MoveRight{
+  +execute(Gameactor: actor): void
+}
+
+class Fire{
+  +execute(Gameactor: actor): void
+}
+
+/'
+  InputHandler responsibilities:
+  associating command with sdl scan code
+  associating sdl scan code with commands
+  need to bind and unbind sdl scan codes to commands
+'/
+class InputHandler{
+  -keyToCommand: unordered_map<SDL_Scancode, shared_ptr<Command>>
+  -commandToKey: unordered_map<shared_ptr<Command>, SDL_Scancode>
+  +ExecuteInput(SDL_Scancode: code): bool
+  +bindKeyToCommand(SDL_Scancode:code, CommandScopedEnum): bool
+  +unbindKeyToCommand(SDL_Scancode:code, CommandScopedEnum): bool
+  +resetBindingsToDefault(): bool
+  -getKeyForCommand(command: <shared_ptr<Command>>): SDL_Scancode
+  -getCommandForKey(code: SDL_Scancode): <shared_ptr<Command>>
+
+}
+
+
+
+Command <|-- Jump
+Command <|-- MoveLeft
+Command <|-- MoveRight
+Command <|-- Fire
+
+InputHandler "1" *-- "0..*" Command : owns >
+@enduml

@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-
 class GameActor{
     public:
         virtual void Jump(){

@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include "GameCommands.h"
+#include <memory>
 #include <unordered_map>
 
 class GameActor;
@@ -8,15 +9,24 @@ class GameActor;
 class InputHandler
 {
     public:
-        // Method to bind character
-        Command* handleInput();
+        //Initializes default commands
+        InputHandler();
+        //Setter methods
+        bool bindKeyToCommand(SDL_Scancode code, std::shared_ptr<Command> command);
+        bool unbindKeyToCommand(SDL_Scancode code, std::shared_ptr<Command> command);
+        bool resetBindingsToDefault();
 
-        // Methods to bind commands
+        //action method
+        bool executeCommand(SDL_Scancode code);
 
     private:
-        Command* one;
-        Command* two;
-        Command* three;
-        Command* four;
+        //getter methods
+        SDL_Scancode getKeyForCommand(std::shared_ptr<Command> command);
+        std::shared_ptr<Command> getCommandForKey(SDL_Scancode code);
+        
+        //Associative map command to bound key
+        std::unordered_map<std::shared_ptr<Command>, SDL_Scancode> m_commandToKey;
+        //Associative map binded key to command
+        std::unordered_map<SDL_Scancode, std::shared_ptr<Command>> m_keyToCommand;
 
 };

@@ -7,11 +7,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include headers
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include/designpatterns)
 
 # Find SDL3 installed system-wide
 find_package(SDL3 CONFIG REQUIRED)
 find_package(SDL3_ttf REQUIRED)
 #find_package(SDL3_image REQUIRED)
+
+# Find Catch2
+find_package(Catch2 3 REQUIRED)
 
 # Collect all source files
 file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.cc")
