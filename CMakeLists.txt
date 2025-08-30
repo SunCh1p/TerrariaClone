@@ -24,4 +24,13 @@ file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.cc")
 add_executable(TerrariaClone ${SOURCES})
 
 # Link SDL3 libraries
-target_link_libraries(TerrariaClone PRIVATE SDL3::SDL3 SDL3_ttf::SDL3_ttf )
+target_link_libraries(TerrariaClone PUBLIC SDL3::SDL3 SDL3_ttf::SDL3_ttf )
+
+# file(GLOB_RECURSE TESTSOURCES "${PROJECT_SOURCE_DIR}/test/*.cc")
+
+# # Test executable
+# add_executable(TerrariaCloneTests ${TESTSOURCES})
+
+# # Link Catch2 and project code
+# target_link_libraries(TerrariaCloneTests PRIVATE Catch2::Catch2WithMain TerrariaClone)
+

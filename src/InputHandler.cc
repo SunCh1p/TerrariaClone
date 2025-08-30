@@ -50,9 +50,8 @@ bool InputHandler::resetBindingsToDefault(){
     bool bindMoveLeftFlag = bindKeyToCommand(SDL_SCANCODE_A, std::make_shared<MoveLeft>());
     bool bindMoveRightFlag = bindKeyToCommand(SDL_SCANCODE_D, std::make_shared<MoveRight>());
     bool bindJumpFlag = bindKeyToCommand(SDL_SCANCODE_SPACE, std::make_shared<Jump>());
-
-    //Must bind Fire command with mouse separately
-
+    //TODO: bind fire command separately with mouse
+    bool bindFireFlag = bindKeyToCommand(SDL_SCANCODE_F, std::make_shared<Fire>());
 
     return successFlag;
 
