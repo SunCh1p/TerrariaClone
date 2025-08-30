@@ -3,7 +3,8 @@
 #include "GameCommands.h"
 #include <memory>
 #include <unordered_map>
-
+#include <vector>
+//Purpose of the input handler is to handle input given by any entity
 class GameActor;
 
 class InputHandler
@@ -17,13 +18,17 @@ class InputHandler
         bool resetBindingsToDefault();
 
         //action method
-        bool executeCommand(SDL_Scancode code);
+        bool executeCommand(SDL_Scancode code, GameActor& actor);
 
-    private:
+        //checker methods
+        bool isKeyBound(SDL_Scancode code);
+        bool isCommandBound(std::shared_ptr<Command> command);
+
         //getter methods
         SDL_Scancode getKeyForCommand(std::shared_ptr<Command> command);
         std::shared_ptr<Command> getCommandForKey(SDL_Scancode code);
-        
+
+    private:
         //Associative map command to bound key
         std::unordered_map<std::shared_ptr<Command>, SDL_Scancode> m_commandToKey;
         //Associative map binded key to command

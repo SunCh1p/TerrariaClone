@@ -33,6 +33,8 @@ class InputHandler{
   +bindKeyToCommand(SDL_Scancode:code, CommandScopedEnum): bool
   +unbindKeyToCommand(SDL_Scancode:code, CommandScopedEnum): bool
   +resetBindingsToDefault(): bool
+  +isKeyBound(SDL_Scancode: code): bool
+  +isCommandBound(shared_ptr<Command>: command): bool
   -getKeyForCommand(command: <shared_ptr<Command>>): SDL_Scancode
   -getCommandForKey(code: SDL_Scancode): <shared_ptr<Command>>
 
