@@ -13,24 +13,24 @@ include_directories(${PROJECT_SOURCE_DIR}/include/designpatterns)
 find_package(SDL3 CONFIG REQUIRED)
 find_package(SDL3_ttf REQUIRED)
 #find_package(SDL3_image REQUIRED)
-
-# Find Catch2
 find_package(Catch2 3 REQUIRED)
 
 # Collect all source files
-file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.cc")
+file(GLOB_RECURSE GAME_SOURCES "${PROJECT_SOURCE_DIR}/src/*.cc")
+list(FILTER GAME_SOURCES EXCLUDE REGEX ".*/main\\.cc$")
 
-# Add executable
-add_executable(TerrariaClone ${SOURCES})
+add_library(TerrariaCore ${GAME_SOURCES})
+target_link_libraries(TerrariaCore PRIVATE SDL3::SDL3 SDL3_ttf::SDL3_ttf)
 
-# Link SDL3 libraries
-target_link_libraries(TerrariaClone PUBLIC SDL3::SDL3 SDL3_ttf::SDL3_ttf )
+# Main executable
+add_executable(TerrariaClone src/main.cc)
+target_link_libraries(TerrariaClone PRIVATE TerrariaCore)
 
-# file(GLOB_RECURSE TESTSOURCES "${PROJECT_SOURCE_DIR}/test/*.cc")
+# Tests
+include(CTest)
+file(GLOB_RECURSE TESTSOURCES "${PROJECT_SOURCE_DIR}/tests/*.cc")
+add_executable(tests ${TESTSOURCES})
+target_link_libraries(tests PRIVATE TerrariaCore Catch2::Catch2WithMain)
 
-# # Test executable
-# add_executable(TerrariaCloneTests ${TESTSOURCES})
-
-# # Link Catch2 and project code
-# target_link_libraries(TerrariaCloneTests PRIVATE Catch2::Catch2WithMain TerrariaClone)
+add_test(TerrariaCloneTests tests)
 
