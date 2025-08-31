@@ -27,6 +27,7 @@ add_executable(TerrariaClone src/main.cc)
 target_link_libraries(TerrariaClone PRIVATE TerrariaCore)
 
 # Tests
+enable_testing()
 include(CTest)
 file(GLOB_RECURSE TESTSOURCES "${PROJECT_SOURCE_DIR}/tests/*.cc")
 add_executable(tests ${TESTSOURCES})
