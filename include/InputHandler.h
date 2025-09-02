@@ -7,31 +7,35 @@
 //Purpose of the input handler is to handle input given by any entity
 class GameActor;
 
+struct Input{
+
+};
+
 class InputHandler
 {
     public:
         //Initializes default commands
         InputHandler();
         //Setter methods
-        bool bindKeyToCommand(SDL_Scancode code, std::shared_ptr<Command> command);
-        bool unbindKeyToCommand(SDL_Scancode code, std::shared_ptr<Command> command);
+        bool bindKeyToCommand(SDL_Keycode code, std::shared_ptr<Command> command);
+        bool unbindKeyToCommand(SDL_Keycode code, std::shared_ptr<Command> command);
         bool resetBindingsToDefault();
 
         //action method
-        bool executeCommand(SDL_Scancode code, GameActor& actor);
+        bool executeCommand(SDL_Keycode code, GameActor& actor);
 
         //checker methods
-        bool isKeyBound(SDL_Scancode code);
+        bool isKeyBound(SDL_Keycode code);
         bool isCommandBound(std::shared_ptr<Command> command);
 
         //getter methods
-        SDL_Scancode getKeyForCommand(std::shared_ptr<Command> command);
-        std::shared_ptr<Command> getCommandForKey(SDL_Scancode code);
+        SDL_Keycode getKeyForCommand(std::shared_ptr<Command> command);
+        std::shared_ptr<Command> getCommandForKey(SDL_Keycode code);
 
     private:
         //Associative map command to bound key
-        std::unordered_map<std::shared_ptr<Command>, SDL_Scancode> m_commandToKey;
+        std::unordered_map<std::shared_ptr<Command>, SDL_Keycode> m_commandToKey;
         //Associative map binded key to command
-        std::unordered_map<SDL_Scancode, std::shared_ptr<Command>> m_keyToCommand;
+        std::unordered_map<SDL_Keycode, std::shared_ptr<Command>> m_keyToCommand;
 
 };

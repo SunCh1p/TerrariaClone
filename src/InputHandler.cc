@@ -4,7 +4,7 @@ InputHandler::InputHandler(){
     //Bind 
 }
 
-bool InputHandler::bindKeyToCommand(SDL_Scancode code, std::shared_ptr<Command> command){
+bool InputHandler::bindKeyToCommand(SDL_Keycode code, std::shared_ptr<Command> command){
     bool successFlag = true;
     //check if key/command exists and already bound
     auto commandIt = m_commandToKey.find(command);
@@ -24,7 +24,7 @@ bool InputHandler::bindKeyToCommand(SDL_Scancode code, std::shared_ptr<Command> 
     return successFlag;
 }
 
-bool InputHandler::unbindKeyToCommand(SDL_Scancode code, std::shared_ptr<Command> command){
+bool InputHandler::unbindKeyToCommand(SDL_Keycode code, std::shared_ptr<Command> command){
     bool successFlag = true;
     //make sure code is associated with command and vice versa
     if(isKeyBound(code) && getKeyForCommand(command) != code){
@@ -47,18 +47,18 @@ bool InputHandler::resetBindingsToDefault(){
     m_keyToCommand.clear();
 
     //Apply left setting
-    bool bindMoveLeftFlag = bindKeyToCommand(SDL_SCANCODE_A, std::make_shared<MoveLeft>());
-    bool bindMoveRightFlag = bindKeyToCommand(SDL_SCANCODE_D, std::make_shared<MoveRight>());
-    bool bindJumpFlag = bindKeyToCommand(SDL_SCANCODE_SPACE, std::make_shared<Jump>());
+    bool bindMoveLeftFlag = bindKeyToCommand(SDLK_A, std::make_shared<MoveLeft>());
+    bool bindMoveRightFlag = bindKeyToCommand(SDLK_D, std::make_shared<MoveRight>());
+    bool bindJumpFlag = bindKeyToCommand(SDLK_SPACE, std::make_shared<Jump>());
     //TODO: bind fire command separately with mouse
-    bool bindFireFlag = bindKeyToCommand(SDL_SCANCODE_F, std::make_shared<Fire>());
+    bool bindFireFlag = bindKeyToCommand(SDLK_F, std::make_shared<Fire>());
 
     return successFlag;
 
 
 }
 
-bool InputHandler::executeCommand(SDL_Scancode code, GameActor& actor){
+bool InputHandler::executeCommand(SDL_Keycode code, GameActor& actor){
     bool successFlag = true;
     if(!isKeyBound(code)){
         successFlag = false;
@@ -80,7 +80,7 @@ bool InputHandler::executeCommand(SDL_Scancode code, GameActor& actor){
     return successFlag;
 }
 
-bool InputHandler::isKeyBound(SDL_Scancode code){
+bool InputHandler::isKeyBound(SDL_Keycode code){
     bool successFlag = true;
     //check if key is already bound
     if(m_keyToCommand.find(code) == m_keyToCommand.end()){
@@ -100,16 +100,16 @@ bool InputHandler::isCommandBound(std::shared_ptr<Command> command){
     return successFlag;
 }    
 
-SDL_Scancode InputHandler::getKeyForCommand(std::shared_ptr<Command> command){
+SDL_Keycode InputHandler::getKeyForCommand(std::shared_ptr<Command> command){
     //If key not found, return unknown flag
     if(m_commandToKey.find(command) == m_commandToKey.end()){
-        return SDL_SCANCODE_UNKNOWN;
+        return SDLK_UNKNOWN;
     }
     //other wise return key to the command
     return m_commandToKey[command];
 }
 
-std::shared_ptr<Command> InputHandler::getCommandForKey(SDL_Scancode code){
+std::shared_ptr<Command> InputHandler::getCommandForKey(SDL_Keycode code){
     if(m_keyToCommand.find(code) == m_keyToCommand.end()){
         return nullptr;
     }

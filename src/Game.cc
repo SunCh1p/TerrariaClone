@@ -76,6 +76,25 @@ void Game::m_processInput(SDL_Event& e){
         if(e.type == SDL_EVENT_QUIT){
             //set running flag to false
             m_running = false;
+        } else if(e.type == SDL_EVENT_MOUSE_MOTION || e.type == SDL_EVENT_MOUSE_BUTTON_DOWN || e.type == SDL_EVENT_MOUSE_BUTTON_UP){
+            //Get mouse position
+            float x = -1.0f, y = -1.0f;
+            SDL_GetMouseState(&x, &y);
+
+            switch(e.type){
+                case SDL_EVENT_MOUSE_MOTION:
+                std::cout << "Mouse is in motion" << std::endl;
+                break;
+            
+                case SDL_EVENT_MOUSE_BUTTON_DOWN:
+                std::cout << "Mouse button down" << std::endl;
+                break;
+                
+                case SDL_EVENT_MOUSE_BUTTON_UP:
+                std::cout << "Mouse button up" << std::endl;
+                std::cout << "x: " << x << " y: " << y << std::endl;
+                break;
+            }
         }
     }
 }
