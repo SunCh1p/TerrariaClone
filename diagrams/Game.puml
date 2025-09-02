@@ -1,0 +1,15 @@
+class Game{
+    -m_processInput(): void 
+    -m_update(): void 
+    -m_render(): void
+    -m_framerate: int 
+    -m_width: int
+    -m_height: int 
+    -m_running: bool
+    +Game()
+    +Init(): bool 
+    +Run(): void
+    +Close(): bool
+    -m_gWindow: SDL_Window* 
+    -m_gScreenSurface: SDL_Surface*
+}
