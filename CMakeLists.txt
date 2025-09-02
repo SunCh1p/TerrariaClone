@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
-project(TerrariaClone)
+project(TerrariaClone LANGUAGES CXX)
 
 # Set C++ Standard
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+# set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "a9e1cf81-9932-4810-974b-6eccaf14e457")
+# set(CMAKE_CXX_MODULE_STD 1)
 
 # Include headers
 include_directories(${PROJECT_SOURCE_DIR}/include)
@@ -27,11 +30,8 @@ add_executable(TerrariaClone src/main.cc)
 target_link_libraries(TerrariaClone PRIVATE TerrariaCore)
 
 # Tests
-enable_testing()
 include(CTest)
-file(GLOB_RECURSE TESTSOURCES "${PROJECT_SOURCE_DIR}/tests/*.cc")
-add_executable(tests ${TESTSOURCES})
-target_link_libraries(tests PRIVATE TerrariaCore Catch2::Catch2WithMain)
-
-add_test(TerrariaCloneTests tests)
-
+include(Catch)
+# catch_discover_tests(tests)
+enable_testing()
+add_subdirectory(tests)

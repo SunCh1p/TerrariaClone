@@ -4,48 +4,43 @@
 
 GameActor actor;
 
-TEST_CASE("Testing Game Actor Jump", "[GameActor]"){
-    SECTION("Testing Jump"){
-        std::stringstream buffer;
-        std::streambuf* oldCout = std::cout.rdbuf(buffer.rdbuf());
-        actor.Jump();
-        REQUIRE(buffer.str() == "Game Actor Jumped\n");
-        buffer.clear();
-        std::cout.rdbuf(oldCout);
-
-    }
-}
-
-TEST_CASE("Testing Game Actor Fire", "[GameActor]"){
+TEST_CASE("Testing Game Actor", "[GameActor]"){
+    
     SECTION("TESTING Fire"){
         std::stringstream buffer;
         std::streambuf* oldCout = std::cout.rdbuf(buffer.rdbuf());
         actor.Fire();
+        std::cout.rdbuf(oldCout);
         REQUIRE(buffer.str() == "Game Actor fired\n");
         buffer.clear();
-        std::cout.rdbuf(oldCout);
     }
-}
 
-TEST_CASE("Testing Game Actor MoveRight", "[GameActor]"){
+    SECTION("Testing Jump"){
+        std::stringstream buffer;
+        std::streambuf* oldCout = std::cout.rdbuf(buffer.rdbuf());
+        actor.Jump();
+        std::cout.rdbuf(oldCout);
+        REQUIRE(buffer.str() == "Game Actor Jumped\n");
+        buffer.clear();
+
+    }
+
     SECTION("Testing MoveRight"){
         std::stringstream buffer;
         std::streambuf* oldCout = std::cout.rdbuf(buffer.rdbuf());
         actor.MoveRight();
+        std::cout.rdbuf(oldCout);
         REQUIRE(buffer.str() == "Game Actor moved right\n");
         buffer.clear();
-        std::cout.rdbuf(oldCout);
 
     }
-}
 
-TEST_CASE("Testing Game Actor MoveLeft", "[GameActor]"){
     SECTION("Testing MoveLeft"){
         std::stringstream buffer;
         std::streambuf* oldCout = std::cout.rdbuf(buffer.rdbuf());
         actor.MoveLeft();
+        std::cout.rdbuf(oldCout);
         REQUIRE(buffer.str() == "Game Actor moved left\n");
         buffer.clear();
-        std::cout.rdbuf(oldCout);
     }
 }
