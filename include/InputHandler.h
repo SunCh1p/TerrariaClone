@@ -7,9 +7,49 @@
 //Purpose of the input handler is to handle input given by any entity
 class GameActor;
 
-struct Input{
-
+//the following section is written with the assistance of chatgpt because I had no idea how to approach this
+//and the solution is good enough for my purposes
+enum class InputDeviceType{
+    Keyboard,
+    Mouse,
+    Unknown
 };
+
+struct Input{
+    InputDeviceType device;
+    union {
+        SDL_Keycode key;
+        Uint8 mouseButton;
+        InputDeviceType unknown;
+    };
+    bool operator==(const Input& other) const{
+        if(device != other.device){
+            return false;
+        }
+        switch(device){
+            case InputDeviceType::Keyboard: return key == other.key;
+            case InputDeviceType::Mouse: return mouseButton == other.mouseButton;
+            default: return true;
+        }
+    }
+    bool operator!=(const Input& other) const{
+        return !(*this == other);
+    }
+};
+
+struct InputHash {
+    std::size_t operator()(const Input& i) const {
+        std::size_t h1 = std::hash<int>()(static_cast<int>(i.device));
+        std::size_t h2 = 0;
+        switch (i.device) {
+            case InputDeviceType::Keyboard: h2 = std::hash<SDL_Keycode>()(i.key); break;
+            case InputDeviceType::Mouse:    h2 = std::hash<Uint8>()(i.mouseButton); break;
+            default:                        h2 = 0; break;
+        }
+        return h1 ^ (h2 << 1);
+    }
+};
+//end of chatgpt section
 
 class InputHandler
 {
@@ -17,25 +57,25 @@ class InputHandler
         //Initializes default commands
         InputHandler();
         //Setter methods
-        bool bindKeyToCommand(SDL_Keycode code, std::shared_ptr<Command> command);
-        bool unbindKeyToCommand(SDL_Keycode code, std::shared_ptr<Command> command);
-        bool resetBindingsToDefault();
+        bool bindKeyToCommand(Input input, std::shared_ptr<Command> command);
+        //bool unbindKeyToCommand(SDL_Keycode code, std::shared_ptr<Command> command);
+        //bool resetBindingsToDefault();
 
         //action method
-        bool executeCommand(SDL_Keycode code, GameActor& actor);
+        //bool executeCommand(SDL_Keycode code, GameActor& actor);
 
         //checker methods
-        bool isKeyBound(SDL_Keycode code);
-        bool isCommandBound(std::shared_ptr<Command> command);
+        //bool isKeyBound(SDL_Keycode code);
+        //bool isCommandBound(std::shared_ptr<Command> command);
 
         //getter methods
-        SDL_Keycode getKeyForCommand(std::shared_ptr<Command> command);
-        std::shared_ptr<Command> getCommandForKey(SDL_Keycode code);
+        //const Input getKeyForCommand(std::shared_ptr<Command> command);
+        //const std::shared_ptr<Command> getCommandForKey(SDL_Keycode code);
 
     private:
         //Associative map command to bound key
-        std::unordered_map<std::shared_ptr<Command>, SDL_Keycode> m_commandToKey;
+        std::unordered_map<std::shared_ptr<Command>, Input> m_commandToKey;
         //Associative map binded key to command
-        std::unordered_map<SDL_Keycode, std::shared_ptr<Command>> m_keyToCommand;
+        std::unordered_map<Input, std::shared_ptr<Command>, InputHash> m_keyToCommand;
 
 };

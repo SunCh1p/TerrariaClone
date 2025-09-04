@@ -1,5 +1,6 @@
 #include "GameCommands.h"
 #include <catch2/catch_test_macros.hpp>
+#include <sstream>
 
 
 TEST_CASE("Testing Jump command object", "[Jump]"){
