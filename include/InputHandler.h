@@ -57,7 +57,7 @@ class InputHandler
         //Initializes default commands
         InputHandler();
         //Setter methods
-        bool bindKeyToCommand(Input input, std::shared_ptr<Command> command);
+        bool bindInputToCommand(Input input, std::shared_ptr<Command> command);
         //bool unbindKeyToCommand(SDL_Keycode code, std::shared_ptr<Command> command);
         //bool resetBindingsToDefault();
 
@@ -65,17 +65,17 @@ class InputHandler
         //bool executeCommand(SDL_Keycode code, GameActor& actor);
 
         //checker methods
-        //bool isKeyBound(SDL_Keycode code);
-        //bool isCommandBound(std::shared_ptr<Command> command);
+        bool isInputBound(Input input);
+        bool isCommandBound(std::shared_ptr<Command> command);
 
         //getter methods
-        //const Input getKeyForCommand(std::shared_ptr<Command> command);
-        //const std::shared_ptr<Command> getCommandForKey(SDL_Keycode code);
+        const Input getInputForCommand(std::shared_ptr<Command> command);
+        const std::shared_ptr<Command> getCommandForInput(Input input);
 
     private:
         //Associative map command to bound key
-        std::unordered_map<std::shared_ptr<Command>, Input> m_commandToKey;
+        std::unordered_map<std::shared_ptr<Command>, Input> m_commandToInput;
         //Associative map binded key to command
-        std::unordered_map<Input, std::shared_ptr<Command>, InputHash> m_keyToCommand;
+        std::unordered_map<Input, std::shared_ptr<Command>, InputHash> m_inputToCommand;
 
 };
